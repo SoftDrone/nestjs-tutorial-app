@@ -1,0 +1,7 @@
+@host = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoibW9oYW1tZWQiLCJpYXQiOjE3NTQ0MTMzNjEsImV4cCI6MTc1NDQxMzQyMX0.wftQ91J8GIsRkfU5i2QMzgX8u2IVQ26aHMCy8-QBtcA
+
+### Get All Users (Authenticated)
+GET {{host}}/auth/profile
+Authorization: Bearer {{token}}
+Accept: application/json

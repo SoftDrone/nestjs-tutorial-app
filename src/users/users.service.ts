@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import * as bcrypt from 'bcrypt';
+import * as argon2 from 'argon2';
 import { CreateUserDto } from './create-user.dto';
 
 @Injectable()
@@ -12,21 +12,20 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  findAll(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
 
-  findOne(id: number): Promise<User | null> {
+  async findOne(id: number): Promise<User | null> {
     return this.usersRepository.findOneBy({ id });
   }
 
-  findOneByName(username: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ username });
+  async findOneByUsername(username: string): Promise<User | null> {
+    return this.usersRepository.findOne({where: { username }, select: ['id', 'username', 'password', 'email', 'isAdmin', 'createdAt', 'updatedAt']});
   }
 
   async create(data: CreateUserDto): Promise<User> {
-    const saltOrRounds = 10;
-    const hashedPassword = await bcrypt.hash(data.password, saltOrRounds);
+    const hashedPassword = await argon2.hash(data.password);
 
     const user = this.usersRepository.create({
       ...data,
