@@ -3,9 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
+import { User } from './users/entities/user.entity';
+import { Unit } from './units/entities/unit.entity';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { UnitsModule } from './units/units.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -21,11 +23,12 @@ import configuration from './config/configuration';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User],
+      entities: [User, Unit],
       synchronize: true,
     }),
     AuthModule,
     UsersModule,
+    UnitsModule,
   ],
   controllers: [AppController],
   providers: [

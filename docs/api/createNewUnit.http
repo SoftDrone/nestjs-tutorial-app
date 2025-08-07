@@ -1,0 +1,7 @@
+POST http://localhost:3000/units/
+Content-Type: application/json
+
+{
+  "name": "Unit 1",
+  "index": 1
+}
