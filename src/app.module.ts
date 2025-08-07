@@ -6,10 +6,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 import { Unit } from './units/entities/unit.entity';
 import { Lesson } from './lessons/entities/lesson.entity';
+import { Question } from './questions/entities/question.entity';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { UnitsModule } from './units/units.module';
 import { LessonsModule } from './lessons/lessons.module';
+import { QuestionsModule } from './questions/questions.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -25,13 +27,14 @@ import configuration from './config/configuration';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User, Unit, Lesson],
+      entities: [User, Unit, Lesson, Question],
       synchronize: true,
     }),
     AuthModule,
     UsersModule,
     UnitsModule,
     LessonsModule,
+    QuestionsModule,
   ],
   controllers: [AppController],
   providers: [
