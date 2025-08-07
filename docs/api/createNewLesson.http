@@ -1,0 +1,8 @@
+POST http://localhost:3000/lessons/
+Content-Type: application/json
+
+{
+  "unit_id": 1,
+  "name": "Lesson 1",
+  "index": 1
+}
