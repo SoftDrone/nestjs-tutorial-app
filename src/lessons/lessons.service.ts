@@ -39,8 +39,12 @@ export class LessonsService {
     return lessons.map(lesson => new LessonResponseDto(lesson));
   }
 
-  async findOne(id: number) {
-    return this.lessonsRepository.findOneBy({ id });
+  async findOne(id: number): Promise<LessonResponseDto> {
+    const lesson = await this.lessonsRepository.findOneBy({ id });
+    if(!lesson) {
+      throw new NotFoundException(`Question with id ${id} not found`);
+    }
+    return new LessonResponseDto(lesson);
   }
 
   async update(id: number, updateLessonDto: UpdateLessonDto) {

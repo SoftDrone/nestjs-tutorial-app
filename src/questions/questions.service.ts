@@ -30,7 +30,7 @@ export class QuestionsService {
       question_text: createQuestionDto.question_text,
       answers: createQuestionDto.answers,
       correct_answer_id: createQuestionDto.correct_answer_id,
-      lesson: lesson, // ✅ this is the fix
+      lesson: lesson,
     });
 
     return await this.questionsRepository.save(question);
@@ -39,13 +39,18 @@ export class QuestionsService {
   async findAll(): Promise<QuestionResponseDto[]> {
     const questions = await this.questionsRepository.find({ relations: ['lesson'] });
 
-    return questions.map(qeustion => new QuestionResponseDto(qeustion));
+    return questions.map(question => new QuestionResponseDto(question));
   }
 
-  async findOne(id: number) {
-    return this.questionsRepository.findOneBy({ id });
-  }
+  async findOne(id: number): Promise<QuestionResponseDto> {
+    const question = await this.questionsRepository.findOneBy({ id });
 
+    if (!question) {
+      throw new NotFoundException(`Question with id ${id} not found`);
+    }
+
+    return new QuestionResponseDto(question);
+  }
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {
     return `This action updates a #${id} question`;
   }
