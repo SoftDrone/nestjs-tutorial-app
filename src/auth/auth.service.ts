@@ -14,7 +14,7 @@ export class AuthService {
     username: string,
     password: string,
   ): Promise<{ access_token: string }> {
-    const user = await this.usersService.findOneByUsername(username);
+    const user = await this.usersService.findForLogin(username);
       if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
