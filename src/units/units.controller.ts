@@ -14,7 +14,7 @@ export class UnitsController {
 
   @Get()
   findAll() {
-    return this.unitsService.findAll();
+    return this.unitsService.getAllUnitsForUser(18);
   }
 
   @Get(':id')

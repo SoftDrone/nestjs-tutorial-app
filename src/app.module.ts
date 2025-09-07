@@ -7,11 +7,16 @@ import { User } from './users/entities/user.entity';
 import { Unit } from './units/entities/unit.entity';
 import { Lesson } from './lessons/entities/lesson.entity';
 import { Question } from './questions/entities/question.entity';
+import { Answer } from './questions/entities/answer.entity';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { UnitsModule } from './units/units.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { QuestionsModule } from './questions/questions.module';
+import { UserAnswer } from './results/entities/user-answer.entity';
+import { UserLesson } from './results/entities/user-lesson.entity';
+import { ResultsModule } from './results/results.module';
+
 import configuration from './config/configuration';
 
 @Module({
@@ -27,7 +32,7 @@ import configuration from './config/configuration';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [User, Unit, Lesson, Question],
+      entities: [User, Unit, Lesson, Question, Answer, UserAnswer, UserLesson],
       synchronize: true,
     }),
     AuthModule,
@@ -35,6 +40,7 @@ import configuration from './config/configuration';
     UnitsModule,
     LessonsModule,
     QuestionsModule,
+    ResultsModule,
   ],
   controllers: [AppController],
   providers: [

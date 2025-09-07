@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
@@ -11,10 +11,15 @@ export class QuestionsController {
   create(@Body() createQuestionDto: CreateQuestionDto) {
     return this.questionsService.create(createQuestionDto);
   }
-
+  
   @Get()
-  findAll() {
-    return this.questionsService.findAll();
+  async getQuestions(@Query('lessonId') unitId?: string) {
+    return this.questionsService.findAll(unitId ? Number(unitId) : undefined);
+  }
+  
+  @Get('/mistakes')
+  async getMyMistakes() {
+    return this.questionsService.getMyMistakes(18);
   }
 
   @Get(':id')

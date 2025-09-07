@@ -5,32 +5,26 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
   JoinColumn,
 } from 'typeorm';
 import { Lesson } from '../../lessons/entities/lesson.entity';
-
-type Answer = {
-  id: number;
-  text: string;
-};
+import { Answer } from './answer.entity';
 
 @Entity()
 export class Question {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Lesson, { onDelete: 'CASCADE', nullable: false })
+  @ManyToOne(() => Lesson, (lesson) => lesson.questions, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'lesson_id' })
   lesson: Lesson;
 
   @Column()
   question_text: string;
 
-  @Column('json')
+  @OneToMany(() => Answer, (answer) => answer.question, { cascade: true })
   answers: Answer[];
-
-  @Column()
-  correct_answer_id: number;
 
   @CreateDateColumn()
   created_at: Date;

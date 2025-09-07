@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index, Unique } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index, Unique, OneToMany  } from 'typeorm';
+import { UserLesson } from '../../results/entities/user-lesson.entity';
 
 @Entity()
 @Unique(['username']) // Ensures usernames are unique
@@ -51,4 +52,7 @@ export class User {
     nullable: false,
   })
   updatedAt: Date;
+
+  @OneToMany(() => UserLesson, userLesson => userLesson.user)
+  userLessons: UserLesson[];
 }

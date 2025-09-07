@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Lesson } from '../../lessons/entities/lesson.entity';
 
 @Entity()
 export class Unit {
@@ -16,4 +17,8 @@ export class Unit {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  // Relation to lessons
+  @OneToMany(() => Lesson, lesson => lesson.unit)
+  lessons: Lesson[];
 }

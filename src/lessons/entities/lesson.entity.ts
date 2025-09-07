@@ -6,8 +6,11 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany 
 } from 'typeorm';
 import { Unit } from '../../units/entities/unit.entity';
+import { UserLesson } from '../../results/entities/user-lesson.entity';
+import { Question } from '../../questions/entities/question.entity';
 
 @Entity()
 export class Lesson {
@@ -29,4 +32,10 @@ export class Lesson {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => UserLesson, userLesson => userLesson.lesson)
+  userLessons: UserLesson[];
+  
+  @OneToMany(() => Question, (question) => question.lesson, { cascade: true })
+  questions: Question[];
 }
